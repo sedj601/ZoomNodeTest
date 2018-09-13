@@ -17,6 +17,8 @@ import javafx.scene.input.ZoomEvent;
 public class GUITools
 {
 
+    public static double scale = 1;
+
     /**
      * Allow to zoom/scale any node with pivot at scene (x,y) coordinates.
      *
@@ -29,7 +31,7 @@ public class GUITools
     public static void zoom(Node node, double factor, double x, double y)
     {
         double oldScale = node.getScaleX();
-        double scale = oldScale * factor;
+        scale = oldScale * factor;
         if (scale < 0.05) {
             scale = 0.05;
         }

@@ -6,6 +6,7 @@
 package javafxapplication258;
 
 import javafx.application.Application;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
@@ -21,24 +22,21 @@ public class JavaFXApplication258 extends Application
     @Override
     public void start(Stage primaryStage)
     {
-        PersonView personView = new PersonView(new Image(getClass().getResourceAsStream("person-female.png")), "Michelle", "Lisa", "Jefferson", "Loves Sedrick!");
-        PersonView personView2 = new PersonView(new Image(getClass().getResourceAsStream("person-male.png")), "Sedrick", "LaShun", "Jefferson", "Loves Michelle!");
-//        ScrollPane root = new ScrollPane();
 
-        Pane group = new Pane(personView, personView2);
-//        group.setLayoutX(0);
-//        group.setLayoutY(0);
-        group.setStyle("-fx-background-color: red");
-        group.setOnScroll((event) -> {
-            GUITools.zoom(group, event);
+        Group currentGroup = new Group();
+        Pane masterPane = new Pane(currentGroup);
+
+        PersonView personView = new PersonView(new Image(getClass().getResourceAsStream("person-female.png")), "Michelle", "Lisa", "Jefferson", "Loves Sedrick!", currentGroup, masterPane);
+        PersonView personView2 = new PersonView(new Image(getClass().getResourceAsStream("person-male.png")), "Sedrick", "LaShun", "Jefferson", "Loves Michelle!", currentGroup, masterPane);
+
+        currentGroup.getChildren().addAll(personView, personView2);
+
+        masterPane.setStyle("-fx-background-color: red");
+        currentGroup.setOnScroll((event) -> {
+            GUITools.zoom(masterPane, event);
         });
-//        root.setContent(group);
-//        group.setOnScroll((event) -> {
-//            GUITools.zoom(group, event);
-//        });
-//        root.setStyle("-fx-background-color: yellow");
 
-        Scene scene = new Scene(group, 1080, 720);
+        Scene scene = new Scene(masterPane, 1080, 720);
 
         primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
